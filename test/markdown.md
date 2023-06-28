@@ -2,21 +2,17 @@
 sort: 1
 ---
 
-# Markdown Elements
+# Welcome to CGMega’s documentation
 
-Text can be **bold**, _italic_, or ~~strikethrough~~. [Links](https://github.com) should be blue with no underlines (unless hovered over).
+CGMega is a graph attention-based deep learning framework for cancer gene module dissection. CGMega leverages a combination of multi-omics data cross genome, epigenome, proteome and especially three-dimension (3D) genome levels.
 
-There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs.
+Source code is availabel at [CGMega GitHub repository(no link)](https://github.com) . For more information, please read our paper: [CGMega: dissecting cancer gene module with explainable graph attention network(no link)](https://www.nature.com/ncomms/).
 
-There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs. There should be whitespace between paragraphs.
-
-> There should be no margin above this first sentence.
 >
-> Blockquotes should be a lighter gray with a gray border along the left side.
+> This website is still under the beta test phase. Thanks for your interest.
 >
-> There should be no margin below this final sentence.
 
-# Header 1
+## Contents
 
 This is a normal paragraph following a header. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.
 
