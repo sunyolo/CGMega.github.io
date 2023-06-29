@@ -4,7 +4,7 @@ This tutorial demonstrates how to use CGMega functions with a demo dataset. Once
 
 #What the tutorial covers
 
-## 1. How to orepare input data
+## 1. How to prepare input data
 
 We recommend getting started with CGMega using the provided demo dataset. When you want to apply CGMega to your own multi-omics dataset, please refer to the following tutorials to learn how to prepare input data. Overall, the input data consists of two parts: the graph, constructed from PPI and the node feature including compressed Hi-C features, SNVs, CNVs frequencies and epigenetic densities.
 
