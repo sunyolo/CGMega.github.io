@@ -154,6 +154,8 @@ Now we get the reduced Hi-C data as below (replace with a table):
 
 <div align="center"><img width="50%" src="https://raw.githubusercontent.com/mzlogin/mzlogin.github.io/master/images/posts/markdown/demo.png"/></div>
 
+```css
+<div class="center">
 | gene_name       | HiC-1       | HiC-2       | HiC-3       | HiC-4       | HiC-5       |
 |-----------------|-------------|-------------|-------------|-------------|-------------|
 | OR4F5           | 1           | 0.000160124 | 0.224521596 | 0.240359624 | 0.48014354  |
@@ -16321,6 +16323,9 @@ Now we get the reduced Hi-C data as below (replace with a table):
 | SPRY3           | 1           | 0.000160124 | 0.224521596 | 0.240359624 | 0.48014354  |
 | VAMP7           | 1           | 0.000160124 | 0.224521596 | 0.240359624 | 0.48014354  |
 | IL9R            | 1           | 0.000160124 | 0.224521596 | 0.240359624 | 0.48014354  |
+
+<div>
+```
 
 #### 1.2 Other omics data
 
