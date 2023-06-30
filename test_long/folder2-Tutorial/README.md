@@ -4,8 +4,9 @@ This tutorial demonstrates how to use CGMega functions with a demo dataset. Once
 
 <style>
 pre {
+  overflow-x: auto;
   overflow-y: auto;
-  max-height: 400px;
+  max-height: 300px;
 }
 </style>
 
