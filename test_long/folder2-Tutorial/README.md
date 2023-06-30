@@ -1,7 +1,6 @@
 # Tutorial
 
-This tutorial demonstrates how to use CGMega functions with a demo dataset. Once you are familiar with CGMega’s workflow, please replace the demo data with your own data to begin your analysis.
-
+This tutorial demonstrates how to use CGMega functions with a demo dataset (for MCF7 cell line). Once you are familiar with CGMega’s workflow, please replace the demo data with your own data to begin your analysis.
 <style>
 pre {
   overflow-x: auto;
@@ -22,25 +21,33 @@ The labels should be collected yourself if you choose analyze your own data.
  
 #### 1.1 Hi-C data embedding
 
-We use SVD to condense the chromatin information in Hi-C data.
-
  ```note
 Before SVD, the Hi-C data should go through: 
+1. processing by [NeoLoopFinder](https://github.com/XiaoTaoWang/NeoLoopFinder) to remove the potential effects of structural variation; 
+2. normalization using [ICE]( https://bitbucket.org/mirnylab/hiclib) correction to improve the data quality. 
 
-first, processing by [NeoLoopFinder](https://github.com/XiaoTaoWang/NeoLoopFinder) to remove the potential effects of structural variation; 
-
-second, normalization using [ICE]( https://bitbucket.org/mirnylab/hiclib) correction to improve the data quality. If you are new to these two tools, please go through these document in advance.
-
-[tutorial for NeoLoopFinder need link](./)
-
-[tutorial for Hi-C normalization need link](./)
+If you are new to these two tools, please go through these document in advance.
+[tutorial for NeoLoopFinder (need link)](./)
+[tutorial for Hi-C normalization (need link)](./)
  ```
 
- ```css
+After the corrections by NeoLoopFinder and ICE, we then condense the chromatin information in Hi-C data.
+The defualt way for Hi-C dimention reduction is Singular Value Decomposition (SVD).
+
+```css
+# used to reduce Hi-C dimention
+hic_mat = get_hic_mat(
+						data_dir=data_dir,
+						drop_rate=hic_drop_rate, #default=0.0
+						reduce=hic_reduce, #default='svd'
+                            		reduce_dim=hic_reduce_dim, #default=5
+                            		resolution=resolution, #default='10Kb', depends on your own Hi-C data
+                            		type=hic_type, #default='ice'
+                            		norm=hic_norm #default='log')
+                            		
  def get_hic_mat(data_dir='data/Breast_Cancer_Matrix', drop_rate=0.0, reduce='svd', reduce_dim=5, resolution='10KB', type='ice', norm='log'):
     """
     Read Hi-C matrix from a csv file and do dimensionality reduction or normalization. Corresponding matrix should be put into certain directory first.
-
     Parameters:
     ----------
     data_dir:   str, default='data/Breast_Cancer_Matrix'
@@ -77,7 +84,6 @@ second, normalization using [ICE]( https://bitbucket.org/mirnylab/hiclib) correc
         print(f"Loading Hi-C matrix from {hic_dir} ......")
 
         return hic_dir
-
     def normalize_hic_data(data, method, reduce):
         """
         Normalize the input Hi-C matrix.
@@ -143,6 +149,9 @@ second, normalization using [ICE]( https://bitbucket.org/mirnylab/hiclib) correc
 
     return minmax(hic_data, axis= 1 if reduce else -1) 
  ```
+
+Now we get the reduced Hi-C data as below (replace with a table):
+<div align="center"><img width="65" height="75" src="https://raw.githubusercontent.com/mzlogin/mzlogin.github.io/master/images/posts/markdown/demo.png"/></div>
 
 #### 1.2 Other omics data
 
