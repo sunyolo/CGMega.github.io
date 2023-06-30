@@ -2,7 +2,12 @@
 
 This tutorial demonstrates how to use CGMega functions with a demo dataset. Once you are familiar with CGMega’s workflow, please replace the demo data with your own data to begin your analysis.
 
-#What the tutorial covers
+<style>
+pre {
+  overflow-y: auto;
+  max-height: 400px;
+}
+</style>
 
 ## 1. How to prepare input data
 
@@ -11,21 +16,26 @@ We recommend getting started with CGMega using the provided demo dataset. When y
  If you are unfamiliar with CGMega, you may start with our data used in the paper to save your time. For MCF7 cell line, K562 cell line and AML patients, the input data as well as their label information are uploaded [here](https://github.com/NBStarry/CGMega/tree/main/data). If you start with any one from these data, you can skip the step 1 about _How to prepare input data_.
  
  ```note
-The labels should be collected yourself if you choose analyze your own data. WWWW!
+The labels should be collected yourself if you choose analyze your own data.
  ```
  
 #### 1.1 Hi-C data embedding
 
-We use SVD to compress the chromatin information embedded in Hi-C data.
+We use SVD to condense the chromatin information in Hi-C data.
 
  ```note
-Before SVD, the Hi-C data should go through: first, processing by [NeoLoopFinder](https://github.com/XiaoTaoWang/NeoLoopFinder) to REMOVE the potential effects of structural variation; second, normalization using [ICE]( https://bitbucket.org/mirnylab/hiclib) correction to improve the data quality. If you are new to these two tools, please go through these document in advance.
+Before SVD, the Hi-C data should go through: 
+
+first, processing by [NeoLoopFinder](https://github.com/XiaoTaoWang/NeoLoopFinder) to remove the potential effects of structural variation; 
+
+second, normalization using [ICE]( https://bitbucket.org/mirnylab/hiclib) correction to improve the data quality. If you are new to these two tools, please go through these document in advance.
 
 [tutorial for NeoLoopFinder need link](./)
+
 [tutorial for Hi-C normalization need link](./)
  ```
 
- ```
+ ```css
  def get_hic_mat(data_dir='data/Breast_Cancer_Matrix', drop_rate=0.0, reduce='svd', reduce_dim=5, resolution='10KB', type='ice', norm='log'):
     """
     Read Hi-C matrix from a csv file and do dimensionality reduction or normalization. Corresponding matrix should be put into certain directory first.
