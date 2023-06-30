@@ -30,11 +30,19 @@ If you are new to these two tools, please go through these document in advance.
 [tutorial for NeoLoopFinder (need link)](./)
 [tutorial for Hi-C normalization (need link)](./)
  ```
+The parameters used in NeoLoopFinder are listed as below:
+
+- input file format: .cool or .mcool
+- resolution: 10Kb
+- output file format: .matrix.
+- ANY OTHERS???
+
+Then we implement ICE correction following [Imakaev, Maxim et al.](https://www.nature.com/articles/nmeth.2148) and this step has beed packaged in one-line command as `content from xuxiang`.
 
 After the corrections by NeoLoopFinder and ICE, we then condense the chromatin information in Hi-C data.
 The defualt way for Hi-C dimention reduction is Singular Value Decomposition (SVD).
 
-```css
+```
 # used to reduce Hi-C dimention
 hic_mat = get_hic_mat(
 					data_dir=data_dir,
@@ -166,7 +174,6 @@ Now we get the reduced Hi-C data as below (replace with a table):
 | C1orf159        | 0.96152902  | 0.062132207 | 0.185860829 | 0.212024252 | 0.454002735 |
 | TTLL10          | 0.991588209 | 0.010710517 | 0.215210022 | 0.23584837  | 0.479124017 |
 | SDF4            | 0.974902568 | 0.039697561 | 0.176009104 | 0.226073947 | 0.49244549  |
-
 
 #### 1.2 Other omics data
 
