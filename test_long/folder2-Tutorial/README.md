@@ -9,6 +9,14 @@ pre {
 }
 </style>
 
+<style>
+table {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 300px;
+}
+</style>
+
 ## 1. How to prepare input data
 
 We recommend getting started with CGMega using the provided demo dataset. When you want to apply CGMega to your own multi-omics dataset, please refer to the following tutorials to learn how to prepare input data. Overall, the input data consists of two parts: the graph, constructed from PPI and the node feature including compressed Hi-C features, SNVs, CNVs frequencies and epigenetic densities.
@@ -154,7 +162,7 @@ Now we get the reduced Hi-C data as below (replace with a table):
 
 <div align="center"><img width="50%" src="https://raw.githubusercontent.com/mzlogin/mzlogin.github.io/master/images/posts/markdown/demo.png"/></div>
 
-```css
+
 <div class="center">
 | gene_name       | HiC-1       | HiC-2       | HiC-3       | HiC-4       | HiC-5       |
 |-----------------|-------------|-------------|-------------|-------------|-------------|
@@ -16323,9 +16331,7 @@ Now we get the reduced Hi-C data as below (replace with a table):
 | SPRY3           | 1           | 0.000160124 | 0.224521596 | 0.240359624 | 0.48014354  |
 | VAMP7           | 1           | 0.000160124 | 0.224521596 | 0.240359624 | 0.48014354  |
 | IL9R            | 1           | 0.000160124 | 0.224521596 | 0.240359624 | 0.48014354  |
-
 <div>
-```
 
 #### 1.2 Other omics data
 
