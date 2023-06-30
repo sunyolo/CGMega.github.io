@@ -11,7 +11,7 @@ We recommend getting started with CGMega using the provided demo dataset. When y
  If you are unfamiliar with CGMega, you may start with our data used in the paper to save your time. For MCF7 cell line, K562 cell line and AML patients, the input data as well as their label information are uploaded [here](https://github.com/NBStarry/CGMega/tree/main/data). If you start with any one from these data, you can skip the step 1 about _How to prepare input data_.
  
  ```note
-The labels should be collected yourself if you choose analyze your own data. 
+The labels should be collected yourself if you choose analyze your own data. WWWW!
  ```
  
 #### 1.1 Hi-C data embedding
