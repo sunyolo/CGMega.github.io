@@ -309,11 +309,14 @@ The basic properties of this graph (on MCF7 ) will be:
 - number of edges: 1,000,000 (or so?)
 - number of nodes: 16,165
 - feature of any node (e.g., BRCA1): 
+
 | gene_name       | ATAC       | CTCF-1      | CTCF-2      | CTCF-3      | H3K4me3-1   | H3K4me3-2    | H3K27ac-1    | H3K27ac-2    | Means-SNV    | Means-CNV     | Hi-C-1     | Hi-C-2     | Hi-C-3    | Hi-C-4     | Hi-C-5  |      
 |------------------|------------|-------------|-------------|-------------|--------------- |----------------|---------------|----------------|----------------|------------------|-----------|------------|-----------|-----------|----------|
 | BRCA1              | 0.8721      | 0.4091       | 0.2511        | 0.3964       | 0.8850           |0.9591             |0.9387           |0.8595             |0.6185            | 0.2460               |0.8972     |0.1935       |0.0946      |0.1747     |0.5598     |
 
+
 Now the input data is prepared. Let'a go for the model training!
+
  
 ## 2. Model training
 
@@ -349,7 +352,10 @@ This section demonstrates the GAT-based model architecture of CGMega and how to 
 
  ```note
 The above table reports our computing details during CGMega development and IS NOT our computing requirement.
-If your computer does not satisfy the above, you may try to lower down the memory used during model training by reduce the sampling parameters, the batch size or so on. We are going to test CGMega under more scenarios like with different models of GPU or memory limits to update this table.
+
+If your computer does not satisfy the above, you may try to lower down the memory used during model training by reduce the sampling parameters, the batch size or so on. 
+
+We are going to test CGMega under more scenarios like with different models of GPU or memory limits to update this table.
 
  ```
 
@@ -358,6 +364,9 @@ If your computer does not satisfy the above, you may try to lower down the memor
 After prediction, you can do analyses as following to interpret your results.
 
 #### 1. identify the gene module
+
+For each gene, GNNExplainer identified a subgraph G that is most influential to the preiction of its identity from both topological integration and multi-omic information.
+This subgraph consists of 
 
 #### 2. calculate the importance score
 
