@@ -1,6 +1,8 @@
 # Tutorial
 
-This tutorial demonstrates how to use CGMega functions with a demo dataset (for MCF7 cell line). Once you are familiar with CGMega’s workflow, please replace the demo data with your own data to begin your analysis.
+This tutorial demonstrates how to use CGMega functions with a demo dataset (for MCF7 cell line).
+Once you are familiar with CGMega’s workflow, please replace the demo data with your own data to begin your analysis.
+
 <style>
 pre {
   overflow-x: auto;
@@ -11,13 +13,16 @@ pre {
 
 ## 1. How to prepare input data
 
-We recommend getting started with CGMega using the provided demo dataset. When you want to apply CGMega to your own multi-omics dataset, please refer to the following tutorials to learn how to prepare input data. Overall, the input data consists of two parts: the graph, constructed from PPI and the node feature including compressed Hi-C features, SNVs, CNVs frequencies and epigenetic densities.
+We recommend getting started with CGMega using the provided demo dataset. When you want to apply CGMega to your own multi-omics dataset, please refer to the following tutorials to learn how to prepare input data.
+
+Overall, the input data consists of two parts: the graph, constructed from PPI and the node feature including condensed Hi-C features, SNVs, CNVs frequencies and epigenetic densities.
  
- If you are unfamiliar with CGMega, you may start with our data used in the paper to save your time. For MCF7 cell line, K562 cell line and AML patients, the input data as well as their label information are uploaded [here](https://github.com/NBStarry/CGMega/tree/main/data). If you start with any one from these data, you can skip the step 1 about _How to prepare input data_.
- 
+ If you are unfamiliar with CGMega, you may start with our data used in the paper to save your time. For MCF7 cell line, K562 cell line and AML patients, the input data as well as their label information are uploaded [here](https://github.com/NBStarry/CGMega/tree/main/data). If you start with any one from these data, you can skip the _step 1_ about _How to prepare input data_.
+ The following steps from 1.1~1.3 can be found in our source code [data_preprocess_cv.py](https://github.com/NBStarry/CGMega/blob/main/data_preprocess_cv.py)).
  ```note
 The labels should be collected yourself if you choose analyze your own data.
  ```
+ 
  
 #### 1.1 Hi-C data embedding
 
@@ -183,12 +188,15 @@ Now we get the reduced Hi-C data as below (replace with a table):
 
 #### 1.3 PPI graph construction
 
-Then,we read the PPI data (from CPDB as default) and transform it into a graph through the following commands (in [data_preprocess_cv.py](https://github.com/NBStarry/CGMega/blob/main/data_preprocess_cv.py)).
+Then,we read the PPI data and transform it into a graph through the following commands.
 
  ```
  # Load PPI data
  ppi_mat = get_ppi_mat(ppi, drop_rate=ppi_drop_rate, from_list=False, random_seed=random_seed, pan=pan) if ppi else None
+ edge_index, edge_dim, edge_feat = construct_edge(ppi_mat)
  ```
+ 
+Above functions are shown as below:
 
  ```
  # Corresponding functions to read PPI data in different forms.
@@ -296,29 +304,30 @@ Then,we read the PPI data (from CPDB as default) and transform it into a graph t
 
     return edges, edge_dim, val
  ```
+The basic properties of this graph (on MCF7 ) will be:
 
- ```
- # use pyg
- def build_pyg_data(node_mat, node_lab, mat, pos):
-    x = t.tensor(node_mat, dtype=torch.float)
-    y = t.tensor(node_lab, dtype=torch.long)
-    pos = t.tensor(pos, dtype=torch.int)
-    edge_index, edge_dim, edge_feat = construct_edge(mat)
-    edge_index = t.tensor(edge_index, dtype=torch.long)
-    edge_feat = t.tensor(edge_feat, dtype=torch.float)
-    data = Data(x=x.clone(), y=y.clone(), edge_index=edge_index,
-                edge_attr=edge_feat, pos=pos, edge_dim=edge_dim)
-    print(
-        f"Number of edges: {data.num_edges}, Dimensionality of edge: {edge_dim},\nNubmer of nodes: {data.num_nodes}")
-
-    return data
- ```
+- number of edges: 1,000,000 (or so?)
+- number of nodes: 16,165
+- feature of any node (e.g., BRCA1): 
+| gene_name       | ATAC       | CTCF-1      | CTCF-2      | CTCF-3      | H3K4me3-1   | H3K4me3-2    | H3K27ac-1    | H3K27ac-2    | Means-SNV    | Means-CNV     | Hi-C-1     | Hi-C-2     | Hi-C-3    | Hi-C-4     | Hi-C-5  |      
+|------------------|------------|-------------|-------------|-------------|--------------- |----------------|---------------|----------------|----------------|------------------|-----------|------------|-----------|-----------|----------|
+| BRCA1              | 0.8721      | 0.4091       | 0.2511        | 0.3964       | 0.8850           |0.9591             |0.9387           |0.8595             |0.6185            | 0.2460               |0.8972     |0.1935       |0.0946      |0.1747     |0.5598     |
 
 Now the input data is prepared. Let'a go for the model training!
  
 ## 2. Model training
 
-This section demonstrates how to train the GAT-based cancer gene prediction model.
+This section demonstrates the GAT-based model architecture of CGMega and how to train CGMega.
+
+---
+
+### CGMega framework
+
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/model architecture.png"/></div>
+
+---
+
+### Hyperparameters
 
 - To reduce the number of parameters and make training feasible within time and resource constraints, the input graphs were sampled using neighbor sampler. The subgraphs included all first and second order neighbors for each node and training was performed on these subgraphs.
 - The learning rate is increased linearly from 0 to 0.005 for the first 20% of the total iterations.
@@ -327,6 +336,22 @@ This section demonstrates how to train the GAT-based cancer gene prediction mode
 - Dropout is used and the dropout rate is set to 0.1 for the attention mechanism and 0.4 for the other modules.
 - Max pooling step size is 2. After pooling, the representation had 32 dimensions.
 
+---
+
+### System and Computing resources 
+
+| Item     |   Details   |    
+|------------------|-----------------------|
+| System             | Linux or Windows    |
+| RAM Memory   | xx                            |
+| GPU Memory   | GPU型号, 24G          |
+| Time                | xx s                          |
+
+ ```note
+The above table reports our computing details during CGMega development and IS NOT our computing requirement.
+If your computer does not satisfy the above, you may try to lower down the memory used during model training by reduce the sampling parameters, the batch size or so on. We are going to test CGMega under more scenarios like with different models of GPU or memory limits to update this table.
+
+ ```
 
 ## 3. Interpretation
 
