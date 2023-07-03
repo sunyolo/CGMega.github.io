@@ -38,12 +38,15 @@ If you are new to these two tools, please go through these document in advance.
 The parameters and main functions used in NeoLoopFinder are listed as below:
 
 ---
+
 Parameters:
 - input file format: .cool or .mcool
 - resolution: 10Kb
-- output file format: .matrix.
+- output file format: .matrix
+
 ---
-Functions:(availble in [batch_neoloop.sh]())
+Functions:
+
 ```
 - calculate-cnv -H $hic.cool -g hg38 -e MboI --output ${hic}_10kb.cnv
 - segment-cnv  --cnv-file ${hic}-10kb.cnv --binsize 10000 --output  ${hic}-10k.seg  --nproc 10  --ploidy 2
@@ -51,6 +54,7 @@ Functions:(availble in [batch_neoloop.sh]())
 - correct-cnv -H $hic.cool --cnv-file ${hic}-10k.seg  --nproc 10
 - assemble-complexSVs -O ${hic}_10kb  -B $hic.sv  -H $hic.cool
 - neoloop-caller -O $hic.neo-loops.txt  -H $hic.cool  --assembly ${hic}_10kb.assemblies.txt  --no-clustering  --prob 0.95
+
 ```
 ---
 
