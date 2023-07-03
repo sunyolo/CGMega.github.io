@@ -6,9 +6,9 @@ Please follow the guide below to install CGMega and its dependent software.
 
 Operating system: Linux or are highly recommended. CGMega was developed and tested on Linux. Windows Subsystem for Linux (WSL) is not recommended.
 
-Memory: 16 G byte or more?Memory usage also depends on the size of your Hi-C and PPI dataset.
+Memory: Memory usage depends on the size of your Hi-C and PPI dataset and it may cost 
 
-CPU: Core i5 or better processor?
+CPU: Intel(R) Xeon(R) Silver 4210R CPU @ 2.40GHz. This is NOT the least requirement.
 
 ## Software Requirements
 
@@ -16,10 +16,11 @@ CGMega was developed using python 3.8. The interpretation part adopted GNNExplai
 
 - python=3.8.12
 - pytorch=1.9.1
-- torchvision=0.13.1
 - networkx=2.6.3
+- neoloop=0.4.3
+- transformers=4.19.4
+- wandb=0.12.18(optional)
 - pyg=2.0.3
-- GNNExplainer=x.xx
 
 ## Installation
 

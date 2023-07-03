@@ -35,12 +35,24 @@ If you are new to these two tools, please go through these document in advance.
 [tutorial for NeoLoopFinder (need link)](./)
 [tutorial for Hi-C normalization (need link)](./)
  ```
-The parameters used in NeoLoopFinder are listed as below:
+The parameters and main functions used in NeoLoopFinder are listed as below:
 
+---
+Parameters:
 - input file format: .cool or .mcool
 - resolution: 10Kb
 - output file format: .matrix.
-- ANY OTHERS???
+---
+Functions:(availble in [batch_neoloop.sh]())
+```
+- calculate-cnv -H $hic.cool -g hg38 -e MboI --output ${hic}_10kb.cnv
+- segment-cnv  --cnv-file ${hic}-10kb.cnv --binsize 10000 --output  ${hic}-10k.seg  --nproc 10  --ploidy 2
+- cooler balance $hic.cool
+- correct-cnv -H $hic.cool --cnv-file ${hic}-10k.seg  --nproc 10
+- assemble-complexSVs -O ${hic}_10kb  -B $hic.sv  -H $hic.cool
+- neoloop-caller -O $hic.neo-loops.txt  -H $hic.cool  --assembly ${hic}_10kb.assemblies.txt  --no-clustering  --prob 0.95
+```
+---
 
 Then we implement ICE correction following [Imakaev, Maxim et al.](https://www.nature.com/articles/nmeth.2148) and this step has beed packaged in one-line command as `content from xuxiang`.
 
@@ -163,9 +175,7 @@ hic_mat = get_hic_mat(
     return minmax(hic_data, axis= 1 if reduce else -1) 
  ```
 
-Now we get the reduced Hi-C data as below (replace with a table):
-
-<div align="center"><img width="50%" src="https://raw.githubusercontent.com/mzlogin/mzlogin.github.io/master/images/posts/markdown/demo.png"/></div>
+Now we get the reduced Hi-C data as below:
 
 | gene_name       | HiC-1       | HiC-2       | HiC-3       | HiC-4       | HiC-5       |
 |-----------------|-------------|-------------|-------------|-------------|-------------|
@@ -326,7 +336,11 @@ This section demonstrates the GAT-based model architecture of CGMega and how to 
 
 ### CGMega framework
 
-<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/model architecture.png"/></div>
+#### image 1
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/model_architecture.png"/></div>
+
+#### image 2
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/demo.png"/></div>
 
 ---
 
@@ -366,12 +380,33 @@ After prediction, you can do analyses as following to interpret your results.
 #### 1. identify the gene module
 
 For each gene, GNNExplainer identified a subgraph G that is most influential to the preiction of its identity from both topological integration and multi-omic information.
-This subgraph consists of 
+This subgraph consists of two parts: 
+- i) the core subgraph that consists of the most influential pairwise relationships for cancer gene prediction, and
+- ii) the 15-dimension importance scores that quantify the contributions of each gene feature to cancer gene prediction.
 
-#### 2. calculate the importance score
+```note
+The above module identification is calculated at the level of individual genes.
+High-order gene modules reported in our work are constructed with the pairwise-connected individual gene modules.
+```
 
-#### 3. calculate the Representative Feature
+#### 2. calculate the Representative Feature
 
-#### 4. explore the relationships between different gene modules
+According to the feature importance scores calculated by GNNExplainer, we defined the representative features (RFs) for each gene as its features with relatively prominent importance scores.
+In detail, for a given gene, among its features from ATAC, CTCF, H3K4me3 and H3K27ac, SNVs, CNVs and Hi-C, if a feature is assigned with importance score as 10 times higher than the minimum score,it will be referred to as the RF of this gene.
+A graphic illustration is shown as below:
+
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/RF_calculation.png"/></div>
+
+#### 3. explore the relationships between different gene modules
+
+CGMega serves as a tool to help researchers explore the relationships between individual modules of genes. Such kind of view of high-order gene modules may also helps to find something new.
+This is also useful especially when we do not know how to integrate some isolated knowledges into a whole even they are already well-studied under different cases. 
+
+For example, BRCA1 and BRCA2 these two genes act as different roles in common pathway of genome protection and this also exhibited on the topology of their gene modules.
+In brief, BRCA1, as a pleiotropic DDR protein working in broad stages of DNA damage response (DDR), was also widely connected with another 20 genes. 
+In contrast, BRCA2, as the mediator of the core mechanism of homologous recombination (HR), was connected with other genes via ROCK2, an important gene that directly mediates HR repair.
+Moreover, SNV was the RF for both BRCA1 and BRCA2. We also observed a high-order gene module combined from BRCA1 gene module and BRCA2 gene module through three shared genes including TP53, SMAD3 and XPO1.
+
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/example.png"/></div>
 
 source: `{{ page.path }}`
