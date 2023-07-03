@@ -54,7 +54,7 @@ Functions:(availble in [batch_neoloop.sh]())
 ```
 ---
 
-Then we implement ICE correction following [Imakaev, Maxim et al.](https://www.nature.com/articles/nmeth.2148) and this step has beed packaged in one-line command as `content from xuxiang`.
+Then we implement ICE correction following [Imakaev, Maxim et al.](https://www.nature.com/articles/nmeth.2148) and this step has beed packaged in HiC-Pro with one-line command as `HiC-Pro -i raw-matrix -o ice-matrix -c config-hicpro.txt -s ice-norm`.
 
 After the corrections by NeoLoopFinder and ICE, we then condense the chromatin information in Hi-C data.
 The defualt way for Hi-C dimention reduction is Singular Value Decomposition (SVD).
@@ -316,7 +316,7 @@ Above functions are shown as below:
  ```
 The basic properties of this graph (on MCF7 ) will be:
 
-- number of edges: 1,000,000 (or so?)
+- number of edges: 273,765
 - number of nodes: 16,165
 - feature of any node (e.g., BRCA1): 
 
@@ -336,11 +336,7 @@ This section demonstrates the GAT-based model architecture of CGMega and how to 
 
 ### CGMega framework
 
-#### image 1
-<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/model_architecture.png"/></div>
-
-#### image 2
-<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/demo.png"/></div>
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/blob/main/img/model_architecture.png"/></div>
 
 ---
 
@@ -360,9 +356,9 @@ This section demonstrates the GAT-based model architecture of CGMega and how to 
 | Item     |   Details   |    
 |------------------|-----------------------|
 | System             | Linux or Windows    |
-| RAM Memory   | xx                            |
-| GPU Memory   | GPU型号, 24G          |
-| Time                | xx s                          |
+| RAM  | 256G                       |
+| GPU   | NVIDIA GeForce RTX 3090 (24G) |
+| Time  | 0.5~1h                    |
 
  ```note
 The above table reports our computing details during CGMega development and IS NOT our computing requirement.
@@ -395,7 +391,7 @@ According to the feature importance scores calculated by GNNExplainer, we define
 In detail, for a given gene, among its features from ATAC, CTCF, H3K4me3 and H3K27ac, SNVs, CNVs and Hi-C, if a feature is assigned with importance score as 10 times higher than the minimum score,it will be referred to as the RF of this gene.
 A graphic illustration is shown as below:
 
-<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/RF_calculation.png"/></div>
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/blob/main/img/RF_calculation.png"/></div>
 
 #### 3. explore the relationships between different gene modules
 
@@ -407,6 +403,6 @@ In brief, BRCA1, as a pleiotropic DDR protein working in broad stages of DNA dam
 In contrast, BRCA2, as the mediator of the core mechanism of homologous recombination (HR), was connected with other genes via ROCK2, an important gene that directly mediates HR repair.
 Moreover, SNV was the RF for both BRCA1 and BRCA2. We also observed a high-order gene module combined from BRCA1 gene module and BRCA2 gene module through three shared genes including TP53, SMAD3 and XPO1.
 
-<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/tree/main/img/example.png"/></div>
+<div align="center"><img width="50%" src="https://github.com/NBStarry/CGMega/blob/main/img/example.png"/></div>
 
 source: `{{ page.path }}`

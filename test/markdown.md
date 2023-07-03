@@ -12,10 +12,14 @@ Source code is availabel at [CGMega GitHub repository(no link)](https://github.c
 > This website is still under the beta test phase. Thanks for your interest.
 >
 
-## Index
+[TOC]
 
-
-
-```
-This is the final element on the page and there should be no margin below this.
-```
+## [Index](https://sunyolo.github.io/CGMega.github.io/)
+- [Installation](https://sunyolo.github.io/CGMega.github.io/test_long/folder1-Installation/)
+	- [System Requirements](https://sunyolo.github.io/CGMega.github.io/test_long/folder1-Installation/)
+	- [Software Requirements](https://sunyolo.github.io/CGMega.github.io/test_long/folder1-Installation/)
+	- [Installation](https://sunyolo.github.io/CGMega.github.io/test_long/folder1-Installation/)
+- [Tutorial](https://sunyolo.github.io/CGMega.github.io/test_long/folder2-Tutorial/)
+	- [How to prepare input data](#1.how to prepare input data)
+	- [Model training](https://sunyolo.github.io/CGMega.github.io/test_long/folder2-Tutorial/)
+	- [Interpretation](#3.Model training)
