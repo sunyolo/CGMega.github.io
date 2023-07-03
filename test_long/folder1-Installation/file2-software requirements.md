@@ -1,3 +1,3 @@
-# file2
+# software requirements
 
 source: `{{ page.path }}`
